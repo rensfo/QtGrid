@@ -1,6 +1,7 @@
 #include "QGrid/GridView.h"
 #include "delegates/HeaderTableDelegate.h"
 #include "ui_GridView.h"
+#include "ColumnsSerializer.h"
 
 #include <QDebug>
 #include <QHeaderView>
@@ -16,9 +17,9 @@ GridView::GridView(QWidget *parent) : QFrame(parent), mUi(new Ui::GridView)
     mUi->staticFilters->hide();
     toolbar = new QToolBar();
     tableModel = new UniversalTableModel(this);
-    tableModelHeader = new HeaderTableModel(this);
+    // tableModelHeader = new HeaderTableModel(this);
     mUi->tableData->setModel(tableModel);
-    mUi->tableHeader->setModel(tableModelHeader);
+    // mUi->tableHeader->setModel(tableModelHeader);
 
     QBoxLayout *toolboxLayout = new QBoxLayout(QBoxLayout::LeftToRight);
     toolboxLayout->addWidget(toolbar);
@@ -60,7 +61,7 @@ GridView::GridView(QWidget *parent) : QFrame(parent), mUi(new Ui::GridView)
             mUi->tableData->verticalScrollBar(), &QScrollBar::setValue);
     connect(mUi->tableData->verticalScrollBar(), &QScrollBar::valueChanged,
             mUi->verticalScrollBar, &QScrollBar::setValue);
-    connect(tableModelHeader, qOverload<Group>(&HeaderTableModel::filtersChanged), this,
+    connect(mUi->tableHeader->getHeaderModel(), qOverload<Group>(&HeaderTableModel::filtersChanged), this,
             &GridView::onChangedSearchBarFilters);
 
     recreateToolBox();
@@ -103,7 +104,7 @@ void GridView::setColumns(const ColumnsVector &value)
 {
     mColumns = value;
     tableModel->setColumns(mColumns);
-    tableModelHeader->setColumns(mColumns);
+    mUi->tableHeader->setColumns(mColumns);
     mUi->staticFilters->setFilters(mColumns);
     mUi->staticFilters->setVisible(mUi->staticFilters->getHasItem());
     tableModel->setFilters(mUi->staticFilters->getFilters());
@@ -118,10 +119,26 @@ void GridView::setColumns(const ColumnsVector &value)
         if (c->getIsParentId())
             parentIdColumn = c;
     }
+}
 
-    resizeHeader();
-    resizeVerticalHeader();
-    update();
+QString GridView::getColumnsData() const
+{
+    return ColumnsSerializer::serialize(mColumns);
+}
+
+void GridView::setColumnsData(const QString &value)
+{
+    if (mUpdatingColumnsData)
+    {
+        return;
+    }
+    
+    mUpdatingColumnsData = true;
+    
+    ColumnsVector newColumns = ColumnsSerializer::deserialize(value, this);
+    setColumns(newColumns);
+    
+    mUpdatingColumnsData = false;
 }
 
 Mode GridView::getMode() const { return mode; }
@@ -287,8 +304,6 @@ void GridView::setSearchBarShow(bool value)
 
 void GridView::showEvent(QShowEvent *event)
 {
-    Q_UNUSED(event)
-
     QFrame::showEvent(event);
 
     resizeHeader();

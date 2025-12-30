@@ -162,6 +162,27 @@ void ColumnsPropertyEditor::onEditColumns()
         QVector<GridColumn*> newColumns = mActiveList->getColumns();
         mGridView->setColumns(newColumns);
 
+        QDesignerFormWindowInterface *formWindow = QDesignerFormWindowInterface::findFormWindow(mGridView);
+        if (formWindow)
+        {
+            QExtensionManager *manager = mCore->extensionManager();
+            if (manager)
+            {
+                QDesignerPropertySheetExtension *propertySheet = qt_extension<QDesignerPropertySheetExtension*>(manager, mGridView);
+                if (propertySheet)
+                {
+                    int propertyIndex = propertySheet->indexOf("columnsData");
+                    if (propertyIndex != -1)
+                    {
+                        QString columnsData = mGridView->getColumnsData();
+                        propertySheet->setProperty(propertyIndex, columnsData);
+                        propertySheet->setChanged(propertyIndex, true);
+                    }
+                }
+            }
+            formWindow->setDirty(true);
+        }
+
         // emit columnsChanged();
     }
 }

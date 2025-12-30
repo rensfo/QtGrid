@@ -13,10 +13,37 @@
   <property name="windowTitle">
    <string>Grid Example</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="GridView" name="gridView">
+      <property name="headerVisible">
+       <bool>false</bool>
+      </property>
+      <property name="headerText">
+       <string>Header text 1111</string>
+      </property>
+      <property name="toolboxVisible">
+       <bool>false</bool>
+      </property>
+      <property name="searchbarVisible" stdset="0">
+       <bool>false</bool>
+      </property>
+      <property name="columnsData">
+       <string>W3siY2hlY2thYmxlIjpmYWxzZSwiZGlyZWN0RWRpdCI6ZmFsc2UsImVkaXRhYmxlIjpmYWxzZSwiZmllbGROYW1lIjoiRmllbGROYW1lIiwiaGVhZGVyIjoiSGVhZGVyIDEiLCJpbmRleCI6MCwiaXNJZCI6ZmFsc2UsImlzUGFyZW50SWQiOmZhbHNlLCJvcGVyYXRpb25zIjowLCJzaG93RGVsZWdhdGVJblZpZXciOmZhbHNlLCJzaG93SW5TZWFyY2hCYXIiOmZhbHNlLCJzaG93SW5TdGF0aWNGaWx0ZXIiOmZhbHNlLCJ2aXNpYmxlIjp0cnVlfSx7ImNoZWNrYWJsZSI6ZmFsc2UsImRpcmVjdEVkaXQiOmZhbHNlLCJlZGl0YWJsZSI6ZmFsc2UsImZpZWxkTmFtZSI6IkZpZWxkTmFtZSIsImhlYWRlciI6IkhlYWRlciAyIiwiaW5kZXgiOjEsImlzSWQiOmZhbHNlLCJpc1BhcmVudElkIjpmYWxzZSwib3BlcmF0aW9ucyI6MCwic2hvd0RlbGVnYXRlSW5WaWV3IjpmYWxzZSwic2hvd0luU2VhcmNoQmFyIjpmYWxzZSwic2hvd0luU3RhdGljRmlsdGVyIjpmYWxzZSwidmlzaWJsZSI6dHJ1ZX1d</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GridView</class>
+   <extends>QFrame</extends>
+   <header>QGrid/GridView.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
-
-

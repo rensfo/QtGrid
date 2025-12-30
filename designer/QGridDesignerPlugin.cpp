@@ -54,6 +54,9 @@ QString QGridDesignerPlugin::domXml() const
         <property name="searchbarVisible">
             <bool>false</bool>
         </property>
+        <property name="columnsData">
+            <string></string>
+        </property>
     </widget>
 </ui>
 )");

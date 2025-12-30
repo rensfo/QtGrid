@@ -20,6 +20,7 @@ add_library(QGrid SHARED
 
     ${CMAKE_CURRENT_SOURCE_DIR}/GridView.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/GridColumn.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/ColumnsSerializer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderTableFilterWidget.h
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderTableFilterWidget.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/HeaderTableView.h

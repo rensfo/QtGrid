@@ -19,6 +19,8 @@ public:
   virtual void appendColumns(const QVector<GridColumn *> &value) override;
   virtual void setColumns(QVector<GridColumn *> columns) override;
 
+  HeaderTableModel *getHeaderModel() const;
+
   protected:
   virtual void showEvent(QShowEvent *event) override;
 

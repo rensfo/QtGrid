@@ -28,6 +28,7 @@ class QGRID_EXPORT GridView : public QFrame
     Q_PROPERTY(bool toolboxVisible READ getToolboxVisible WRITE setToolboxVisible)
     Q_PROPERTY(bool searchbarVisible READ getSearchBarShow WRITE setSearchBarShow)
     Q_PROPERTY(ColumnsVector columns READ getColumns WRITE setColumns DESIGNABLE true)
+    Q_PROPERTY(QString columnsData READ getColumnsData WRITE setColumnsData)
 
 public:
     explicit GridView(QWidget *parent = 0);
@@ -47,6 +48,9 @@ public:
 
     ColumnsVector getColumns() const;
     void setColumns(const ColumnsVector &value);
+
+    QString getColumnsData() const;
+    void setColumnsData(const QString &value);
 
     Mode getMode() const;
     void setMode(const Mode &value);
@@ -109,7 +113,7 @@ private:
     QVector<GridColumn *> mColumns;
     Mode mode = Mode::ReadWrite;
     UniversalTableModel *tableModel = nullptr;
-    HeaderTableModel *tableModelHeader = nullptr;
+    // HeaderTableModel *tableModelHeader = nullptr;
     QToolBar *toolbar = nullptr;
 
     Group staticFilters;
@@ -118,6 +122,7 @@ private:
     GridColumn *idColumn = nullptr;
     GridColumn *parentIdColumn = nullptr;
     GridView *parentGrid = nullptr;
+    bool mUpdatingColumnsData = false;
 };
 
 #endif // GRIDVIEW_H
